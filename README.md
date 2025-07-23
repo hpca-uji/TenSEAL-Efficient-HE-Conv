@@ -17,25 +17,23 @@ In this work, we have implemented a new matmul method, the im2row transform, a p
 
 ## Features
 
-The new methods added are: 
+New Methods Added
+mm_row and mm_row_:
+Perform matrix multiplication between a CKKSTensor and a Plaintext. Both methods access data by rows to ensure coalesced memory access, improving performance. 
+mm_row returns a new CKKSTensor.
+mm_row_ performs the multiplication in-place, modifying the input tensor.
 
-- mm_row and mm_row_: Matrix- multiplication of a CKKSTensor and Plaintext. 
-  Both are accesed by rows to ensure coalesced memory access and improving performance.
-  The mm_row method returns a new CKKSTensor, while mm_row_ performs the transformation in-place.
+im2row and im2row_: Compute the im2row transformation of an encrypted matrix with shape (input_channels, h × w). The input is expected to already be in im2row format and these methods perform convolution via matrix-matrix multiplication.
+These methods support concatenation of multiple convolutions approximated using this approach.
+Parameters include kernel size, stride, input channels, padding, and output channels.
+The kernel weights have shape (output_channels, input_channels × kernel_height × kernel_width).
 
-- im2row and im2row_: Compute the im2row transform of an encrypted matrix of shape (input_channels, h*w). 
-  The input shape is the one obtained after apply the im2row transform and perform the convolution via matrix-matrix multiplication.
-  This method supports the concatenation of different convolutions that have been approximated using this approach. 
-  The method receives the parameters: kernel size, stride, input_channels, padding and output_channels.
-  The shape of the kernel weights is (output_channels, input_channels × kernel_height × kernel_width).
+conv_direct and conv_direct_:
+Perform convolution directly using the im2row strategy but without explicitly constructing the im2row matrix, thus avoiding unnecessary zero multiplications caused by padding.
+Parameters include kernel size, stride, input channels, padding, output channels, weights, and bias.
+Kernel weights shape: (output_channels, input_channels × kernel_height × kernel_width), matching the flattened im2row format used for matrix multiplication.
 
-- conv_direct and conv_direct_: Performs convolution directly following the im2row strategy, while skipping the explicit construction of the im2row matrix. 
-  Efficiently avoids zero-product computations caused by padding.
-  The method receives the parameters: kernel size, stride, input_channels, padding and output_channels, weight and bias.
-  The shape of the kernel weights is (output_channels, input_channels × kernel_height × kernel_width), matching the flattened im2row format used for matrix multiplication.
-
-- pooling_layer and pooling_layer_: Peform the pooling aproach of the [Cryptonets](http://proceedings.mlr.press/v48/gilad-bachrach16.pdf) network.
-
+pooling_layer and pooling_layer_: Implement the pooling approach described in the [Cryptonets](http://proceedings.mlr.press/v48/gilad-bachrach16.pdf) paper.
 
 
 ## Installation
