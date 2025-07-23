@@ -3,7 +3,7 @@
   <br>
   <a href="http://duet.openmined.org/"><img src="https://github.com/OpenMined/design-assets/raw/master/logos/OM/mark-primary-trans.png" alt="TenSEAL" width="200"></a>
   <br>
-  TenSEAL
+  TenSEAL library + efficient convolution methods
   <br>
 </h1>
 
@@ -20,11 +20,23 @@ In this work, we have implemented the im2row transform (lowering function), a po
 
 ## Features
 
-- :key: Encryption/Decryption of vectors of integers using BFV
-- :old_key: Encryption/Decryption of vectors of real numbers using CKKS
-- :fire: Element-wise addition, subtraction and multiplication of encrypted-encrypted vectors and encrypted-plain vectors
-- :cyclone: Dot product and vector-matrix multiplication
-- :zap: Complete SEAL API under `tenseal.sealapi`
+The new methods added are: 
+
+- :mm_row and mm_row_: Matrix- multiplication of a CKKSTensor and Plaintext. 
+  Both are accesed by rows to ensure coalesced memory access and improving performance.
+  The mm_row method returns a new CKKSTensor, while mm_row_ performs the transformation in-place.
+
+- :im2row and im2row_: Compute the im2row transform of an encrypted matrix of shape (input_channels, h*w). 
+  The input shape is the one obtained after apply the im2row transform and perform the convolution via matrix-matrix multiplication.
+  This method supports the concatenation of different convolutions that have been approximated using this approach. 
+
+- :conv_direct and conv_direct_: Performs convolution directly following the im2row strategy, while skipping the explicit construction of the im2row matrix. 
+  Efficiently avoids zero-product computations caused by padding.
+
+- :pooling_layer and pooling_layer_: Peform the pooling aproach of the [Cryptonets](http://proceedings.mlr.press/v48/gilad-bachrach16.pdf) network.
+
+
+
 
 ## Usage
 
