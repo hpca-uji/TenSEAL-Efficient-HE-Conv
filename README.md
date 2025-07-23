@@ -13,7 +13,7 @@
 
 
 [TenSEAL](https://github.com/OpenMined/TenSEAL) is a library for doing homomorphic encryption operations on tensors, built on top of [Microsoft SEAL](https://github.com/Microsoft/SEAL). It provides ease of use through a Python API, while preserving efficiency by implementing most of its operations using C++. 
-In this work, we have implemented the im2row transform, a pooling function, and the direct convolution for the CKKSTensor class.
+In this work, we have implemented a new matmul method, the im2row transform, a pooling function, and the direct convolution for the CKKSTensor class.
 
 ## Features
 
