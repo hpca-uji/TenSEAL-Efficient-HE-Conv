@@ -26,9 +26,13 @@ The new methods added are:
 - im2row and im2row_: Compute the im2row transform of an encrypted matrix of shape (input_channels, h*w). 
   The input shape is the one obtained after apply the im2row transform and perform the convolution via matrix-matrix multiplication.
   This method supports the concatenation of different convolutions that have been approximated using this approach. 
+  The method receives the parameters: kernel size, stride, input_channels, padding and output_channels.
+  The shape of the kernel weights is (output_channels, input_channels × kernel_height × kernel_width).
 
 - conv_direct and conv_direct_: Performs convolution directly following the im2row strategy, while skipping the explicit construction of the im2row matrix. 
   Efficiently avoids zero-product computations caused by padding.
+  The method receives the parameters: kernel size, stride, input_channels, padding and output_channels, weight and bias.
+  The shape of the kernel weights is (output_channels, input_channels × kernel_height × kernel_width), matching the flattened im2row format used for matrix multiplication.
 
 - pooling_layer and pooling_layer_: Peform the pooling aproach of the [Cryptonets](http://proceedings.mlr.press/v48/gilad-bachrach16.pdf) network.
 
