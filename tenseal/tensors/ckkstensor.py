@@ -125,28 +125,28 @@ class CKKSTensor(AbstractTensor):
         return self
     
     #------------------------------------------------------
-    def mm_fila_(self, other) -> "CKKSTensor":
+    def mm_row_(self, other) -> "CKKSTensor":
         other = self._get_operand(other, dtype="float")
-        self.data.mm_fila_(other)
+        self.data.mm_row_(other)
         return self
     
-    def mm_fila(self, other) -> "CKKSTensor":
+    def mm_row(self, other) -> "CKKSTensor":
         other = self._get_operand(other, dtype="float")
-        result=self.data.mm_fila(other)
+        result=self.data.mm_row(other)
         return self._wrap(result)
     
     #------------------------------------------------------
 
-    def conv_directa_(self, kernel,  stride, channels,  padding,  output_channels, other_weight, other_bias) -> "CKKSTensor":
+    def conv_direct_(self, kernel,  stride, channels,  padding,  output_channels, other_weight, other_bias) -> "CKKSTensor":
         other_weight = self._get_operand(other_weight, dtype="float")
         other_bias = self._get_operand(other_bias, dtype="float")
-        self.data.conv_directa_( kernel,  stride, channels,  padding,  output_channels, other_weight, other_bias)
+        self.data.conv_direct_( kernel,  stride, channels,  padding,  output_channels, other_weight, other_bias)
         return self
     
-    def conv_directa(self, kernel,  stride, channels,  padding,  output_channels, other_weight, other_bias) -> "CKKSTensor":
+    def conv_direct(self, kernel,  stride, channels,  padding,  output_channels, other_weight, other_bias) -> "CKKSTensor":
         other_weight = self._get_operand(other_weight, dtype="float")
         other_bias = self._get_operand(other_bias, dtype="float")
-        result=self.data.conv_directa( kernel,  stride, channels,  padding,  output_channels, other_weight, other_bias)
+        result=self.data.conv_direct( kernel,  stride, channels,  padding,  output_channels, other_weight, other_bias)
         return self._wrap(result)
 
    

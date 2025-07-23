@@ -95,15 +95,15 @@ class CKKSTensor : public EncryptedTensor<double, shared_ptr<CKKSTensor>>,
     /*------------------------------------------------------------------ im2row, pooling and direct */
 
     
-    CKKSTensor  im2row_vector_input_channel_padding_2(const int kernel, const int stride, const int channels, const int padding,  const int output_channels);
-    shared_ptr<CKKSTensor>  im2row_vector_input_channel_padding_2_(const int kernel, const int stride, const int channels, const int padding,  const int output_channels);
+    CKKSTensor  im2row(const int kernel, const int stride, const int channels, const int padding,  const int output_channels);
+    shared_ptr<CKKSTensor>  im2row_(const int kernel, const int stride, const int channels, const int padding,  const int output_channels);
     shared_ptr<CKKSTensor>  pooling_layer(const int kernel, const int stride, const int channels, const int padding,  const int output_channels);
-    shared_ptr<CKKSTensor>  pooling_layer_2(const int kernel, const int stride, const int channels, const int padding,  const int output_channels);
-    shared_ptr<CKKSTensor>  conv_directa_(const int kernel, const int stride, const int channels, const int padding,  const int output_channels,  const PlainTensor<double>& other_weight,  const               PlainTensor<double>& other_bias);
-    CKKSTensor  conv_directa(const int kernel, const int stride, const int channels, const int padding,  const int output_channels,  const PlainTensor<double>& other_weight,  const PlainTensor<double>& other_bias);
+    shared_ptr<CKKSTensor>  pooling_layer_(const int kernel, const int stride, const int channels, const int padding,  const int output_channels);
+    shared_ptr<CKKSTensor>  conv_direct_(const int kernel, const int stride, const int channels, const int padding,  const int output_channels,  const PlainTensor<double>& other_weight,  const               PlainTensor<double>& other_bias);
+    CKKSTensor  conv_direct(const int kernel, const int stride, const int channels, const int padding,  const int output_channels,  const PlainTensor<double>& other_weight,  const PlainTensor<double>& other_bias);
 
-    shared_ptr<CKKSTensor> matmul_plain_inplace_fila_(const PlainTensor<double>& other);
-    CKKSTensor matmul_plain_inplace_fila(const PlainTensor<double>& other);
+    shared_ptr<CKKSTensor> matmul_plain_inplace_row_(const PlainTensor<double>& other);
+    CKKSTensor matmul_plain_inplace_row(const PlainTensor<double>& other);
 
  
 
