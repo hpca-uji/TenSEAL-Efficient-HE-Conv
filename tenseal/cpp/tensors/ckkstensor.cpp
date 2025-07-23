@@ -711,12 +711,11 @@ shared_ptr<CKKSTensor> CKKSTensor::matmul_plain_inplace( // original
 
 /*--------------------------------------------------------------------------*/
 
-shared_ptr<CKKSTensor> CKKSTensor::matmul_plain_inplace_fila_(
+shared_ptr<CKKSTensor> CKKSTensor::matmul_plain_inplace_row_(
     const PlainTensor<double>& other) {
     auto this_shape = this->shape();
     auto other_shape = other.shape();
     
-    printf("## matmul_plain_inplace_fila_ ckkkstensor.cpp %f\n", this->_init_scale);
 
     if (this_shape.size() != 2)
         throw invalid_argument("this tensor isn't a matrix");
@@ -765,12 +764,11 @@ shared_ptr<CKKSTensor> CKKSTensor::matmul_plain_inplace_fila_(
 
 /*--------------------------------------------------------------------------*/
 
-CKKSTensor CKKSTensor::matmul_plain_inplace_fila(
+CKKSTensor CKKSTensor::matmul_plain_inplace_row(
     const PlainTensor<double>& other) {
     auto this_shape = this->shape();
     auto other_shape = other.shape();
     
-    printf("## matmul_plain_inplace_fila ckkkstensor.cpp %f\n", this->_init_scale);
 
     if (this_shape.size() != 2)
         throw invalid_argument("this tensor isn't a matrix");
@@ -811,9 +809,6 @@ CKKSTensor CKKSTensor::matmul_plain_inplace_fila(
     };
 
     this->dispatch_jobs(worker_func, new_size);
-    /*this->_data = TensorStorage<Ciphertext>();
-    this->_data = TensorStorage(new_data, new_shape);
-    return shared_from_this();*/
     clock_t start= clock();
     CKKSTensor newTensor = CKKSTensor(shared_from_this(), new_data, new_shape);
     clock_t end = clock();
@@ -840,7 +835,7 @@ CKKSTensor CKKSTensor::subscript(const vector<pair<size_t, size_t>>& pairs) {
 /*------------------------------------------------------------------------*/ //IMROW
 
 
-CKKSTensor CKKSTensor::im2row_vector_input_channel_padding_2(const int kernel, const int stride, const int channels, const int padding, const int output_channels) {
+CKKSTensor CKKSTensor::im2row(const int kernel, const int stride, const int channels, const int padding, const int output_channels) {
     auto this_shape = this->shape(); 
     auto original_height = this_shape[0];
     // -----------------------------------------
@@ -852,7 +847,7 @@ CKKSTensor CKKSTensor::im2row_vector_input_channel_padding_2(const int kernel, c
     int height_w_padding = height  + 2*padding;
     int total_rows =pow(((height_w_padding - kernel + stride)/stride), 2);
     int total_columns = pow(kernel,2);
-    printf("-------------->v3 kernel: %ld,  padding: %ld, stride: %ld,  in_channels: %ld, output_channels: %ld\n", kernel, padding, stride, channels, output_channels);
+    printf("-------------->im2row kernel: %ld,  padding: %ld, stride: %ld,  in_channels: %ld, output_channels: %ld\n", kernel, padding, stride, channels, output_channels);
   
     vector<Ciphertext> enc_data;
     enc_data.resize(channels*total_rows*total_columns);
@@ -1046,14 +1041,14 @@ CKKSTensor CKKSTensor::im2row_vector_input_channel_padding_2(const int kernel, c
     CKKSTensor newTensor = CKKSTensor(shared_from_this(), enc_data, {total_rows, total_columns*channels});
     clock_t end = clock();
     double time_taken = double(end - start) / double(CLOCKS_PER_SEC);
-    //printf("newTensor: %f\n", time_taken);
+    printf("newTensor: %f\n", time_taken);
    
     return newTensor;
 }
 
 /*------------------------------------------------------------------------*/ //IMROW
 
-shared_ptr<CKKSTensor>  CKKSTensor::im2row_vector_input_channel_padding_2_(const int kernel, const int stride, const int channels, const int padding, const int output_channels) {
+shared_ptr<CKKSTensor>  CKKSTensor::im2row_(const int kernel, const int stride, const int channels, const int padding, const int output_channels) {
     auto this_shape = this->shape(); 
     auto original_height = this_shape[0];
     // -----------------------------------------
@@ -1429,7 +1424,7 @@ shared_ptr<CKKSTensor>  CKKSTensor::pooling_layer(const int kernel, const int st
 
 
 
-shared_ptr<CKKSTensor>  CKKSTensor::pooling_layer_2(const int kernel, const int stride, const int channels, const int padding, const int output_channels) {
+shared_ptr<CKKSTensor>  CKKSTensor::pooling_layer_(const int kernel, const int stride, const int channels, const int padding, const int output_channels) {
     auto this_shape = this->shape(); 
     auto original_height = this_shape[0];
     // -----------------------------------------
@@ -1590,7 +1585,7 @@ shared_ptr<CKKSTensor>  CKKSTensor::pooling_layer_2(const int kernel, const int 
 
 /*-----------------------------------------------------------------------*/ //CONV DIRECT
 
-shared_ptr<CKKSTensor>  CKKSTensor::conv_directa_(const int kernel, const int stride, const int channels, const int padding, const int output_channels, const PlainTensor<double>& other_weight,  const PlainTensor<double>& other_bias) {
+shared_ptr<CKKSTensor>  CKKSTensor::conv_direct_(const int kernel, const int stride, const int channels, const int padding, const int output_channels, const PlainTensor<double>& other_weight,  const PlainTensor<double>& other_bias) {
     auto this_shape = this->shape(); 
     auto original_height = this_shape[0];
     // -----------------------------------------
@@ -1602,7 +1597,7 @@ shared_ptr<CKKSTensor>  CKKSTensor::conv_directa_(const int kernel, const int st
     int total_rows =pow(((height_w_padding - kernel + stride)/stride), 2);
     // Salida convolución
     int total_columns = output_channels; 
-    printf("-------------->conv_directa_ layer kernel: %ld,  padding: %ld, stride: %ld,  in_channels: %ld, output_channels: %ld\n", kernel, padding, stride, channels, output_channels);
+    printf("-------------->conv_direct_ layer kernel: %ld,  padding: %ld, stride: %ld,  in_channels: %ld, output_channels: %ld\n", kernel, padding, stride, channels, output_channels);
 
 
     vector<Ciphertext> enc_data;
@@ -1796,7 +1791,7 @@ shared_ptr<CKKSTensor>  CKKSTensor::conv_directa_(const int kernel, const int st
 /
 /*-----------------------------------------------------------------------*/ //CONV DIRECT
 
-CKKSTensor  CKKSTensor::conv_directa(const int kernel, const int stride, const int channels, const int padding, const int output_channels, const PlainTensor<double>& other_weight,  const PlainTensor<double>& other_bias) {
+CKKSTensor  CKKSTensor::conv_direct(const int kernel, const int stride, const int channels, const int padding, const int output_channels, const PlainTensor<double>& other_weight,  const PlainTensor<double>& other_bias) {
     auto this_shape = this->shape(); 
     auto original_height = this_shape[0];
     // -----------------------------------------
@@ -1808,7 +1803,7 @@ CKKSTensor  CKKSTensor::conv_directa(const int kernel, const int stride, const i
     int total_rows =pow(((height_w_padding - kernel + stride)/stride), 2);
     // Output convolution
     int total_columns = output_channels; 
-    printf("-------------->conv_directa_ layer kernel: %ld,  padding: %ld, stride: %ld,  in_channels: %ld, output_channels: %ld\n", kernel, padding, stride, channels, output_channels);
+    printf("-------------->conv_direct_ layer kernel: %ld,  padding: %ld, stride: %ld,  in_channels: %ld, output_channels: %ld\n", kernel, padding, stride, channels, output_channels);
 
 
     vector<Ciphertext> enc_data;

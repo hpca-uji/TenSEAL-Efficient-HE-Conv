@@ -696,8 +696,8 @@ void bind_ckks_tensor(py::module &m) {
         .def("mm", &CKKSTensor::matmul_plain)
         .def("mm_", &CKKSTensor::matmul_plain_inplace)
         /*----------------------------------------------------*/
-        .def("mm_fila_", &CKKSTensor::matmul_plain_inplace_fila_)
-        .def("mm_fila", &CKKSTensor::matmul_plain_inplace_fila)
+        .def("mm_row_", &CKKSTensor::matmul_plain_inplace_row_)
+        .def("mm_row", &CKKSTensor::matmul_plain_inplace_row)
         /*----------------------------------------------------*/
         // python arithmetic
         .def("__add__", &CKKSTensor::add)
@@ -764,12 +764,12 @@ void bind_ckks_tensor(py::module &m) {
         
         /*-----------------------------------------------------------------------------   im2row, pooling, conv direct */
       
-        .def("im2row_vector_input_channel_padding_2", &CKKSTensor::im2row_vector_input_channel_padding_2)
-        .def("im2row_vector_input_channel_padding_2_", &CKKSTensor::im2row_vector_input_channel_padding_2_)
+        .def("im2row", &CKKSTensor::im2row)
+        .def("im2row_", &CKKSTensor::im2row_)
         .def("pooling_layer", &CKKSTensor::pooling_layer)
-        .def("pooling_layer_2", &CKKSTensor::pooling_layer_2)
-        .def("conv_directa_", &CKKSTensor::conv_directa_)
-        .def("conv_directa", &CKKSTensor::conv_directa)
+        .def("pooling_layer_", &CKKSTensor::pooling_layer_)
+        .def("conv_direct_", &CKKSTensor::conv_direct_)
+        .def("conv_direct", &CKKSTensor::conv_direct)
        
 
          /*----------------------------------------------------------------------------- */
