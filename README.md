@@ -9,27 +9,14 @@
 
 <h3 align="center">
   <br>
-  A library for doing homomorphic encryption operations on tensors
+  This work extendend the TenSEAL library to perform homomorphic encryption convolutions on tensors
   <br>
 </h3>
 
-<div align="center">
-
-[![Tests](https://github.com/OpenMined/TenSEAL/workflows/Tests/badge.svg)](https://github.com/OpenMined/TenSEAL/actions?query=branch%3Amaster++)
-[![Linux Package](https://github.com/OpenMined/TenSEAL/workflows/Linux%20Package/badge.svg)](https://github.com/OpenMined/TenSEAL/actions/workflows/pythonpublish-linux.yml)
-[![MacOS Package](https://github.com/OpenMined/TenSEAL/workflows/MacOS%20Package/badge.svg)](https://github.com/OpenMined/TenSEAL/actions/workflows/pythonpublish-macos.yml)
-[![Windows Package](https://github.com/OpenMined/TenSEAL/workflows/Windows%20Package/badge.svg)](https://github.com/OpenMined/TenSEAL/actions/workflows/pythonpublish-windows.yml)
 
 
-[![Downloads](https://img.shields.io/pypi/dd/tenseal)](https://pypi.org/project/tenseal/)
-[![Version](https://img.shields.io/pypi/v/tenseal)](https://pypi.org/project/tenseal/)
-[![OpenCollective](https://img.shields.io/opencollective/all/openmined)](https://opencollective.com/openmined)
-[![Slack](https://img.shields.io/badge/chat-on%20slack-7A5979.svg)](https://openmined.slack.com/messages/support)
-
-
-</div>
-
-TenSEAL is a library for doing homomorphic encryption operations on tensors, built on top of [Microsoft SEAL](https://github.com/Microsoft/SEAL). It provides ease of use through a Python API, while preserving efficiency by implementing most of its operations using C++.
+TenSEAL is a library for doing homomorphic encryption operations on tensors, built on top of [Microsoft SEAL](https://github.com/Microsoft/SEAL). It provides ease of use through a Python API, while preserving efficiency by implementing most of its operations using C++. 
+In this work, we have implemented the im2row transform (lowering function), a pooling function, and the direct convolution for the CKKSTensor class.
 
 ## Features
 
