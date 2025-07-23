@@ -18,8 +18,8 @@ In this work, we have implemented a new matmul method, the im2row transform, a p
 ## Features
 
 New Methods Added
-mm_row and mm_row_:
-Perform matrix multiplication between a CKKSTensor and a Plaintext. Both methods access data by rows to ensure coalesced memory access, improving performance. 
+
+mm_row and mm_row_: Perform matrix multiplication between a CKKSTensor and a Plaintext. Both methods access data by rows to ensure coalesced memory access, improving performance. 
 mm_row returns a new CKKSTensor.
 mm_row_ performs the multiplication in-place, modifying the input tensor.
 
